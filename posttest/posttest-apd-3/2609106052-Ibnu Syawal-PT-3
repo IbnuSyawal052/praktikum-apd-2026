@@ -1,6 +1,5 @@
 import sys
 
-
 DATA_NAMA = "Ibnu" 
 DATA_NIM = "52"    
 
@@ -21,11 +20,11 @@ input_nim = input("Masukkan 2 Digit Belakang NIM : ")
 
 # Kode penghenti programjika data tidak seusuai
 if input_nama != DATA_NAMA or input_nim != DATA_NIM:
-    print("\n[!] ERROR: Login Gagal! Nama atau NIM tidak sesuai.")
+    print("\n[!] ERROR: Login Gagal! Nama atau NIM tidak sesuai, kok lu bisa lupa nama ama nim sendiri?.")
     print("Program dihentikan.")
     sys.exit()
 
-print(f"\n[✓] Login Berhasil! Halo, {input_nama} (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧")
+print(f"\n[✓] Login Berhasil! Halo, {input_nama}! Selamat datang di ANGKASA MUSIC STREAMING.")
 print("-" * 55)
 
 # List paket
@@ -46,9 +45,7 @@ print("   - Biaya Admin : 7%")
 print("   - Fitur       : Akses semua fitur, playlist kustom, mode offline, dan konten eksklusif artis")
 print("-" * 55)
 
-pilihan = input(" Pilih nomor paket yang diinginkan (1/2/3/4): ")
-
-
+pilihan = input(" Pilih nomor paket yang diinginkan : ")
 
 
 if pilihan == "1":
@@ -75,7 +72,7 @@ else:
 biaya_admin = BIAYA_LANGGANAN * persenan_admin
 total_bayar = BIAYA_LANGGANAN + biaya_admin
 
-# Struk pembayararn
+# Struk pembayaran
 print("\n")
 print("=" * 55)
 print("🧾 STRUK PEMBAYARAN ANGKASA MUSIC 🧾".center(55))
