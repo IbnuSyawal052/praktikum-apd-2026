@@ -1,0 +1,94 @@
+import sys
+
+
+DATA_NAMA = "Ibnu" 
+DATA_NIM = "52"    
+
+BIAYA_LANGGANAN = 1500000
+# Kode agar tidak desimal biayanya
+def format_rupiah(angka):
+    return f"Rp {int(angka):,}".replace(",", ".")
+
+# Interface Awal
+print("=" * 55)
+print("🎶 WELCOME TO ANGKASA MUSIC STREAMING 🎶".center(55))
+print("=" * 55)
+
+
+print("\n[+] SILAKAN LOGIN TERLEBIH DAHULU")
+input_nama = input("Masukkan Nama Anda            : ")
+input_nim = input("Masukkan 2 Digit Belakang NIM : ")
+
+# Kode penghenti programjika data tidak seusuai
+if input_nama != DATA_NAMA or input_nim != DATA_NIM:
+    print("\n[!] ERROR: Login Gagal! Nama atau NIM tidak sesuai.")
+    print("Program dihentikan.")
+    sys.exit()
+
+print(f"\n[✓] Login Berhasil! Halo, {input_nama} (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧")
+print("-" * 55)
+
+# List paket
+print("\n🌟 PILIHAN PAKET LANGGANAN 🌟")
+print(f"Harga Dasar: {format_rupiah(BIAYA_LANGGANAN)}")
+print("-" * 55)
+print("1. 🪐 Paket Orbit")
+print("   - Biaya Admin : 1%")
+print("   - Fitur       : Akses dasar ke lagu-lagu populer")
+print("2. 🌌 Paket Nebula")
+print("   - Biaya Admin : 3%")
+print("   - Fitur       : Akses lagu premium dan playlist kustom")
+print("3. 🚀 Paket Galaxy")
+print("   - Biaya Admin : 5%")
+print("   - Fitur       : Akses lagu premium, playlist kustom, dan mode offline")
+print("4. 💥 Paket Supernova")
+print("   - Biaya Admin : 7%")
+print("   - Fitur       : Akses semua fitur, playlist kustom, mode offline, dan konten eksklusif artis")
+print("-" * 55)
+
+pilihan = input(" Pilih nomor paket yang diinginkan (1/2/3/4): ")
+
+
+
+
+if pilihan == "1":
+    nama_paket = "Orbit"
+    persenan_admin = 0.01
+    fitur = "Akses dasar ke lagu-lagu populer"
+elif pilihan == "2":
+    nama_paket = "Nebula"
+    persenan_admin = 0.03
+    fitur = "Akses lagu premium dan playlist kustom"
+elif pilihan == "3":
+    nama_paket = "Galaxy"
+    persenan_admin = 0.05
+    fitur = "Akses lagu premium, playlist kustom, dan mode offline"
+elif pilihan == "4":
+    nama_paket = "Supernova"
+    persenan_admin = 0.07
+    fitur = "Akses semua fitur, playlist kustom, mode offline, dan konten eksklusif artis"
+else:
+    print("\n[!] ERROR: Pilihan tidak valid. Silakan jalankan ulang program.")
+    sys.exit()
+
+
+biaya_admin = BIAYA_LANGGANAN * persenan_admin
+total_bayar = BIAYA_LANGGANAN + biaya_admin
+
+# Struk pembayararn
+print("\n")
+print("=" * 55)
+print("🧾 STRUK PEMBAYARAN ANGKASA MUSIC 🧾".center(55))
+print("=" * 55)
+print(f"Nama Pengguna    : {input_nama}")
+print(f"Paket Pilihan    : Paket {nama_paket}")
+print(f"Harga Dasar      : {format_rupiah(BIAYA_LANGGANAN)}")
+print(f"Biaya Admin ({int(persenan_admin*100)}%) : {format_rupiah(biaya_admin)}")
+print("-" * 55)
+print(f"TOTAL BAYAR      : {format_rupiah(total_bayar)}")
+print("=" * 55)
+print("DETAIL KEUNTUNGAN PAKET".center(55))
+print(f" {fitur}")
+print("=" * 55)
+print("Terima kasih telah berlangganan ANGKASA!".center(55))
+print("=" * 55)
