@@ -1,0 +1,58 @@
+# batas = 5
+# for i in range(batas):
+#     print("Perulangan ke-", i)
+
+# game = ["Genshin", 7.0, True]
+# for i in game:
+#     print(i)
+
+# for i in range (1, 10):
+#     print(i)
+
+# for i in range(1, 7):# Mengontrol baris dalam tabel perkalian
+#     for j in range(1, 8):# Mengontrol kolom dalam tabel perkalian
+#         for k in range(4, 5):
+#             print(f'{i} x {j} x {k} = {i * j * k}')
+#     print('') #biar ada jarak tiap iterasic
+
+# jawab = "ya"
+# hitung = 0
+
+# while(jawab == "ya"):
+#     hitung += 1
+#     jawab = input("Ulang lagi tidak? ")
+
+# print(f"Total Perulangan : {hitung}")
+
+# for i in range(20):
+#     if i == 12:
+#         break
+# print(i)
+
+# angka_benar = 7
+# while True:
+#     print("---Game Tebak Angka---")
+#     angka_input = (input("Masukkan Angka (1-10): "))
+#     if not angka_input.isdigit():
+#         print("Silakan masukkan angka yang valid!")
+#         continue
+#     angka_input = int(angka_input)
+#     if angka_benar == angka_input:
+#         print("Angka yang kamu masukkan benar")
+#         break
+#     else:
+#         print("Angka kamu salah, coba lagi!")
+
+# for i in range(10):
+#     if i % 2 == 0:
+#         continue
+# print(i)
+
+n = int(input("Masukkan batas angka:"))
+jumlah_ganjil = 0
+for i in range(1, n):
+    if i % 2 == 0:
+        continue
+    jumlah_ganjil += 1
+    print(i)
+print(f"Jumlah angka ganjil dari 1 hingga {n-1} adalah: {jumlah_ganjil}")
