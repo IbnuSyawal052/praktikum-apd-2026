@@ -1,0 +1,2 @@
+formula1 = ["Suzuka", 10, True, 20.30, ["Lewis Hamilton", 2, 2.50]]
+print (formula1[4][0])
