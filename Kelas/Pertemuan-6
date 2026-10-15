@@ -1,0 +1,209 @@
+# angka_ganjil = {1, 3, 5, 7, 9}
+# for angka in angka_ganjil:
+#     print (angka)
+
+# kelas = {"a", "b", "c"}
+# kelas.add("d")
+# print(kelas)
+
+# aslab1 = {"fina", "shasha", "risma"}
+# aslab2 = {"larry", "attar", "haekal"}
+# print(aslab1)
+# print(aslab2)
+# gabung = aslab1.union(aslab2)
+# print(gabung)
+
+
+# def simulate_clash(base_power, coin_power, coin_amount, sanity, enemy_power=None):
+#     # Base clash value
+#     raw_power = base_power + (coin_power * coin_amount)
+
+#     # Sanity affects how much of your power is actually usable
+#     # 100 sanity = full power, 0 sanity = 45% of power
+#     sanity_ratio = max(0.0, min(1.0, sanity / 100.0))
+#     effective_power = raw_power * (0.45 + 0.55 * sanity_ratio)
+
+#     # Optional: compare against enemy power
+#     if enemy_power is not None:
+#         if effective_power > enemy_power:
+#             result = "Win"
+#         elif effective_power < enemy_power:
+#             result = "Lose"
+#         else:
+#             result = "Draw"
+#     else:
+#         result = "No enemy power provided"
+
+#     return {
+#         "base_power": base_power,
+#         "coin_power": coin_power,
+#         "coin_amount": coin_amount,
+#         "sanity": sanity,
+#         "raw_power": raw_power,
+#         "effective_power": round(effective_power, 2),
+#         "result": result
+#     }
+
+
+# # Example usage
+# base = float(input("Enter base power: "))
+# coin_power = float(input("Enter coin power: "))
+# coin_amount = int(input("Enter coin amount: "))
+# sanity = float(input("Enter sanity: "))
+
+# enemy = float(input("Enter enemy power (optional, press 0 if none): "))
+
+# if enemy == 0:
+#     result = simulate_clash(base, coin_power, coin_amount, sanity)
+# else:
+#     result = simulate_clash(base, coin_power, coin_amount, sanity, enemy)
+
+# print(result)
+
+
+# import random
+
+
+# def roll_skill_power(base_power, coin_power, coin_amount, sanity):
+#     heads_chance = (50 + sanity) / 100
+#     heads = 0
+
+#     for _ in range(coin_amount):
+#         if random.random() < heads_chance:
+#             heads += 1
+
+#     return base_power + coin_power * heads
+
+
+# def simulate_clash(player, enemy, trials=10000):
+#     results = {"win": 0, "lose": 0, "draw": 0}
+
+#     for _ in range(trials):
+#         player_coins = player["coin_amount"]
+#         enemy_coins = enemy["coin_amount"]
+
+#         while player_coins > 0 and enemy_coins > 0:
+#             player_power = roll_skill_power(
+#                 player["base_power"],
+#                 player["coin_power"],
+#                 player_coins,
+#                 player["sanity"],
+#             )
+#             enemy_power = roll_skill_power(
+#                 enemy["base_power"],
+#                 enemy["coin_power"],
+#                 enemy_coins,
+#                 enemy["sanity"],
+#             )
+
+#             if player_power > enemy_power:
+#                 enemy_coins -= 1
+#             elif player_power < enemy_power:
+#                 player_coins -= 1
+#             else:
+#                 player_coins -= 1
+#                 enemy_coins -= 1
+
+#         if player_coins > 0 and enemy_coins == 0:
+#             results["win"] += 1
+#         elif enemy_coins > 0 and player_coins == 0:
+#             results["lose"] += 1
+#         else:
+#             results["draw"] += 1
+
+#     return results
+
+
+# def read_skill(name):
+#     print(f"\n{name} skill")
+#     base_power = int(input("Base power: "))
+#     coin_power = int(input("Coin power: "))
+#     coin_amount = int(input("Number of coins: "))
+#     sanity = int(input("Sanity (-45 to 45): "))
+
+#     if coin_amount < 1:
+#         raise ValueError("A skill must have at least one coin.")
+#     if not -45 <= sanity <= 45:
+#         raise ValueError("Sanity must be between -45 and 45.")
+
+#     return {
+#         "base_power": base_power,
+#         "coin_power": coin_power,
+#         "coin_amount": coin_amount,
+#         "sanity": sanity,
+#     }
+
+
+# player_skill = read_skill("Your")
+# enemy_skill = read_skill("Enemy")
+# clash_results = simulate_clash(player_skill, enemy_skill)
+
+# print("\nEstimated clash results (10,000 simulations):")
+# for result, count in clash_results.items():
+#     print(f"{result.title()}: {count / 100:.2f}%")
+
+
+# Matkul = {
+# "Matkul_ganjil" : "kalkulus",
+# "Matkul_genap" : "statistik"
+# }
+
+# print(Matkul["Matkul_genap"])
+
+# Biodata = {
+# "Nama" : "Siti Julpa",
+# "NIM" : 25091060,
+# "KRS" : ["Struktur Data", "Basis Data"],
+# "Mahasiswa_Aktif" : True,
+# "Instagram" : "julpatarr"
+# }
+
+# print(f"Nama saya adalah {Biodata.get('Nama')}")
+# print(Biodata.get("Nama"))
+# print(Biodata.get("Alamat"))
+# print(Biodata.get("Alamat", "Key untuk alamat tidak ada"))
+
+# game = {
+# "pou" : "chill",
+# "genshin impact" : "action",
+# "valorant" : "fps",
+# "minecraft" : "sandbox",
+# "mobile legend" : "moba",
+# "kikir impact" : "open world",
+# "Limbus company" : "peak"
+# }
+# for i in game.values():
+#     print(i)
+# for i in game.keys():
+#     print(i)
+
+
+# game = {}
+
+# nama_game = input("Masukkan nama game: ")
+# genre = input("Masukkan genre game: ")
+
+# game[nama_game] = genre
+
+# for i, j in game.items():
+#     print(f"{i.title()} adalah game bergenre {j.title()}")
+
+# cache = game.pop("kikir impact")
+# print(game)
+# print(game.get("kikir impact"))
+# print(cache)
+
+# print("Panjang dictionary :", len(game))
+# print(len(game))
+
+menu = {
+"ayam" : ["ayam geprek", "ayam goreng", "ayam bakar"],
+"nasi" : ["nasi goreng", "nasi uduk"],
+"mie" : ["mie goreng rendang", "mie goreng aceh"],
+"kuah" : ["soto", "rawon", "sop iga"]
+}
+for i, j in menu.items():
+    print(f"Kategori {i} memiliki menu :")
+    for kategori in j:
+        print(kategori)
+    print("")
