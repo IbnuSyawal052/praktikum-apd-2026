@@ -1,5 +1,3 @@
-
-
 # Perintah clear terminal (otomatis menyesuaikan dengan OS pengguna)
 import os
 
@@ -119,8 +117,8 @@ while program_berjalan:
                             print("\n[!] Nama dan kategori tidak boleh kosong!")
                         elif len(nama) > 30:
                             print("\n[!] Nama produk maksimal 30 karakter!")
-                        elif len(kategori) > 12:
-                            print("\n[!] Kategori maksimal 12 karakter!")
+                        elif kategori not in ["Processor", "GPU", "RAM", "SSD", "Motherboard", "VGA", "PSU"]:
+                            print("\n[!] Kategori tidak terdaftar!")
                         elif nama_kembar:
                             print("\n[!] Produk dengan nama tersebut sudah ada!")
                         elif not harga_str.isdigit() or int(harga_str) <= 0:
@@ -170,8 +168,8 @@ while program_berjalan:
                                     if nama_baru != "" and len(nama_baru) > 30:
                                         print("[!] Nama produk maksimal 30 karakter!")
                                         valid = False
-                                    if kategori_baru != "" and len(kategori_baru) > 12:
-                                        print("[!] Kategori maksimal 12 karakter!")
+                                    if kategori_baru != "" and kategori_baru not in ["Processor", "GPU", "RAM", "SSD", "Motherboard", "VGA", "PSU"]:
+                                        print("[!] Kategori tidak terdaftar!")
                                         valid = False
                                     if harga_baru != "" and (not harga_baru.isdigit() or int(harga_baru) <= 0):
                                         print("[!] Harga harus berupa angka bulat lebih dari 0!")
@@ -323,9 +321,9 @@ while program_berjalan:
                         print("\n[!] Menu tidak valid! Pilih angka 0 - 8.")
                         input("Tekan Enter untuk melanjutkan...")
 
-                # =====================================================
+                
                 #  MENU PENGGUNA BIASA
-                # =====================================================
+                
                 else:
                     os.system(perintah_clear)
                     print("=" * 60)
@@ -478,7 +476,7 @@ while program_berjalan:
                         input("Tekan Enter untuk melanjutkan...")
 
 
-    # REGISTER (akun baru otomatis berperan sebagai pengguna biasa)
+    # REGISTER (akun baru otomatis akan diberi role pengguna biasa)
 
     elif pilihan == "2":
         os.system(perintah_clear)
@@ -515,7 +513,7 @@ while program_berjalan:
 
     elif pilihan == "3":
         os.system(perintah_clear)
-        print("Terima kasih telah menggunakan sistem Toko Komponen PC!")
+        print("Terima kasih telah menggunakan sistem ini. Sampai jumpa!")
         program_berjalan = False
 
     else:

@@ -1,0 +1,280 @@
+import random
+
+
+STAT_NAMES = {
+    "str": "Strength",
+    "agi": "Agility",
+    "vit": "Vitality",
+    "int": "Intelligence",
+    "cha": "Charisma",
+}
+STAT_ORDER = ("str", "agi", "vit", "int", "cha")
+STARTING_POINTS = 10
+
+
+def read_choice(prompt, choices):
+    """Read a menu choice until the player enters one of the available options."""
+    while True:
+        answer = input(prompt).strip()
+        if answer in choices:
+            return answer
+        print(f"Choose one of: {', '.join(choices)}.")
+
+
+def create_character():
+    print("\nCreate your hero. Each stat starts at 2.")
+    print(f"Spend {STARTING_POINTS} points; no stat can exceed 10.")
+    stats = {stat: 2 for stat in STAT_ORDER}
+    points_left = STARTING_POINTS
+
+    while points_left:
+        print(f"\nPoints remaining: {points_left}")
+        for stat in STAT_ORDER:
+            print(f"  {stat.upper():<3} {STAT_NAMES[stat]:<13} {stats[stat]}")
+
+        stat = input("Add a point to (STR/AGI/VIT/INT/CHA): ").strip().lower()
+        if stat not in stats:
+            print("That is not a recognized stat.")
+        elif stats[stat] == 10:
+            print(f"{STAT_NAMES[stat]} is already at its maximum.")
+        else:
+            stats[stat] += 1
+            points_left -= 1
+
+    return stats
+
+
+def ability_check(stat_value, difficulty):
+    roll = random.randint(1, 20)
+    total = roll + stat_value
+    print(f"You roll {roll} + {stat_value} = {total} (need {difficulty}).")
+    return total >= difficulty
+
+
+def explore(stats):
+    print(
+        "\nThe road to the Wyrm King's keep splits in three. "
+        "How will you cross the haunted pass?"
+    )
+    print("1. Leap across the shattered bridge (AGI)")
+    print("2. Move the fallen stone blocking the tunnel (STR)")
+    print("3. Persuade the wary sentry to show you a safe path (CHA)")
+    route = read_choice("> ", ("1", "2", "3"))
+
+    stat = {"1": "agi", "2": "str", "3": "cha"}[route]
+    if ability_check(stats[stat], 13):
+        print("You make it through safely and find a healing potion.")
+        return 1, 0
+
+    print("The pass takes its toll. You lose 5 HP, but press onward.")
+    return 0, 5
+
+
+def fight_enemy(stats, hero, enemy_name, enemy_hp, enemy_damage, can_negotiate=False):
+    print(f"\n{'=' * 48}")
+    print(f"{enemy_name} blocks your path!")
+
+    while hero["hp"] > 0 and enemy_hp > 0:
+        print(
+            f"\nHP {hero['hp']}/{hero['max_hp']} | "
+            f"Mana {hero['mana']}/{hero['max_mana']} | "
+            f"Potions {hero['potions']} | {enemy_name} HP {enemy_hp}"
+        )
+        print("1. Strike with your weapon (STR)")
+        print("2. Cast a runic bolt (INT, costs 2 mana)")
+        print("3. Evade the next attack (AGI)")
+        print("4. Drink a potion")
+        choices = ("1", "2", "3", "4")
+        if can_negotiate:
+            print("5. Offer the Wyrm King a truce (CHA)")
+            choices += ("5",)
+        action = read_choice("> ", choices)
+        evading = False
+
+        if action == "1":
+            damage = random.randint(3, 6) + stats["str"] // 2
+            enemy_hp -= damage
+            print(f"You strike for {damage} damage.")
+        elif action == "2":
+            if hero["mana"] < 2:
+                print("You do not have enough mana. Choose another action.")
+                continue
+            hero["mana"] -= 2
+            damage = random.randint(5, 8) + stats["int"] // 2
+            enemy_hp -= damage
+            print(f"Your runic bolt deals {damage} damage.")
+        elif action == "3":
+            evading = True
+            print(f"You prepare to dodge {enemy_name}'s attack.")
+        elif action == "4":
+            if hero["potions"] == 0:
+                print("You have no potions left. Choose another action.")
+                continue
+            healing = min(12, hero["max_hp"] - hero["hp"])
+            hero["hp"] += healing
+            hero["potions"] -= 1
+            print(f"You recover {healing} HP.")
+        else:
+            print("You call for peace.")
+            if ability_check(stats["cha"], 19):
+                print("The Wyrm King accepts your offer. The keep falls silent.")
+                return "peace"
+            print("The Wyrm King refuses and lunges at you!")
+
+        if enemy_hp <= 0:
+            break
+
+        if evading and random.randint(1, 20) + stats["agi"] >= 14:
+            print(f"You dodge {enemy_name}'s attack!")
+            continue
+
+        incoming = random.randint(*enemy_damage)
+        if evading:
+            incoming //= 2
+            print("Your dodge is imperfect.")
+        damage_taken = max(1, incoming - stats["vit"] // 4)
+        hero["hp"] -= damage_taken
+        print(f"{enemy_name} hits you for {damage_taken} damage.")
+
+    if hero["hp"] > 0:
+        print(f"\nYou defeated {enemy_name}!")
+        return "victory"
+
+    print(f"\nYou fall before {enemy_name}. Your journey ends here.")
+    return "defeat"
+
+
+def visit_village(stats, hero):
+    print("\nCHAPTER II: THE VILLAGE OF BRIAR GLEN")
+    print(
+        "The villagers hide behind barricaded doors. Their healer has vanished, "
+        "and strange lights flicker in the old watchtower."
+    )
+    print("1. Study the lights and search for a pattern (INT)")
+    print("2. Rally the villagers to search together (CHA)")
+    print("3. Force open the sealed watchtower gate (STR)")
+    choice = read_choice("> ", ("1", "2", "3"))
+    stat = {"1": "int", "2": "cha", "3": "str"}[choice]
+
+    if ability_check(stats[stat], 14):
+        print(
+            "You discover the healer trapped in a cellar. The grateful villagers "
+            "give you two potions."
+        )
+        hero["potions"] += 2
+        return
+
+    print("The search takes all night. The healer is safe, but you gain no supplies.")
+    hero["mana"] = max(0, hero["mana"] - 1)
+    print("The long search costs you 1 mana.")
+
+
+def travel_to_forest(stats, hero):
+    print("\nCHAPTER III: THE WHISPERING WOOD")
+    print(
+        "Silver leaves whisper your name. An ash-gray wolf, twisted by the "
+        "Wyrm King's magic, leaps from the undergrowth."
+    )
+    outcome = fight_enemy(stats, hero, "Ashfang, the Cursed Wolf", 20, (3, 6))
+    if outcome != "victory":
+        return outcome
+
+    print(
+        "\nThe curse lifts from Ashfang. It leaves a potion at your feet "
+        "before disappearing into the trees."
+    )
+    hero["potions"] += 1
+    return "victory"
+
+
+def explore_ruins(stats, hero):
+    print("\nCHAPTER IV: THE SUNKEN RUINS")
+    print(
+        "A staircase descends beneath a drowned temple. Three ancient symbols "
+        "glow on the sealed door."
+    )
+    print("1. Decode the runes (INT)")
+    print("2. Find a narrow passage around the door (AGI)")
+    print("3. Break the stone seal (STR)")
+    choice = read_choice("> ", ("1", "2", "3"))
+    stat = {"1": "int", "2": "agi", "3": "str"}[choice]
+
+    if ability_check(stats[stat], 15):
+        print("The door opens. A forgotten shrine restores your strength and mana.")
+        hero["hp"] = min(hero["max_hp"], hero["hp"] + 8)
+        hero["mana"] = min(hero["max_mana"], hero["mana"] + 3)
+    else:
+        print("The temple's wards flare. You escape, but lose 4 HP.")
+        hero["hp"] -= 4
+
+    if hero["hp"] <= 0:
+        print("The temple's magic overwhelms you.")
+        return "defeat"
+
+    print(
+        "\nA bronze sentinel awakens, guarding the tunnel that leads "
+        "to the Wyrm King's keep."
+    )
+    return fight_enemy(stats, hero, "Bronze Sentinel", 24, (4, 7))
+
+
+def confront_wyrm_king(stats, hero):
+    print("\nCHAPTER V: THE WYRM KING'S KEEP")
+    print(
+        "Beyond the sentinel's chamber, a spiral stair climbs through the "
+        "clouds. At its summit, the Wyrm King waits beside a burning throne."
+    )
+    outcome = fight_enemy(
+        stats, hero, "The Wyrm King", 38, (5, 9), can_negotiate=True
+    )
+    if outcome == "victory":
+        print("The Wyrm King's crown shatters, and dawn returns to the realm.")
+        return "victory"
+    return outcome
+
+
+def main():
+    random.seed()
+    print("=" * 48)
+    print("          THE WYRM KING'S SHADOW")
+    print("       A little text-based fantasy RPG")
+    print("=" * 48)
+
+    name = input("\nWhat is your hero's name? ").strip() or "Nameless Hero"
+    stats = create_character()
+    print(f"\nWelcome, {name}!")
+    for stat in STAT_ORDER:
+        print(f"  {STAT_NAMES[stat]}: {stats[stat]}")
+
+    max_hp = 20 + stats["vit"] * 2
+    hero = {
+        "max_hp": max_hp,
+        "hp": max_hp,
+        "max_mana": 4 + stats["int"],
+        "mana": 4 + stats["int"],
+        "potions": 1,
+    }
+
+    bonus_potions, starting_damage = explore(stats)
+    hero["potions"] += bonus_potions
+    hero["hp"] -= starting_damage
+    if hero["hp"] <= 0:
+        outcome = "defeat"
+    else:
+        visit_village(stats, hero)
+        outcome = travel_to_forest(stats, hero)
+        if outcome == "victory":
+            outcome = explore_ruins(stats, hero)
+        if outcome == "victory":
+            outcome = confront_wyrm_king(stats, hero)
+
+    if outcome == "victory":
+        print(f"\n{name}, the realm will remember your courage.")
+    elif outcome == "peace":
+        print(f"\n{name}, you forged peace where others saw only war.")
+    else:
+        print(f"\n{name}'s journey ends here. Thank you for playing.")
+
+
+if __name__ == "__main__":
+    main()

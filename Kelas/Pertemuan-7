@@ -1,0 +1,58 @@
+# def luas_persegi_panjang():
+#     luas = 3 * 5
+#     return luas
+# #Kita panggil fungsinya
+# print("Luas persegi panjang:", luas_persegi_panjang())
+
+# def luas_persegi(panjang, lebar=10):
+#     luas = panjang * lebar
+#     return luas
+# panjang = int(input("Masukkan panjang persegi: "))
+# # lebar = int(input("Masukkef fan lebar persegi: "))
+
+# print("Luas persegi:", luas_persegi(panjang))
+
+# def pengumuman():
+#     print("Hari ini adalah pengujian proyek akhir")
+
+# for i in range(3):
+#     pengumuman()
+# def keliling_persegi(sisi):
+#     keliling = 4 * sisi
+#     return keliling
+
+# sisi = int(input("Masukkan panjang sisi persegi: "))
+# print("Keliling persegi:", keliling_persegi(sisi))
+
+# #Membuat variabel global
+# nama = "Larry"
+# prodi = "Informatika"
+# #Membuat variabel lokal
+# def data():
+#     global nama, prodi
+#     nama = "Teknik Kedokteran"
+#     prodi = "Kedokteran Lanjut"
+#     print("Nama:", nama)
+#     print("Prodi:", prodi)
+# #Mengakses variabel lokal
+# data()
+# #Mengakses variabel global
+# print("Nama:", nama)
+# print("Prodi:", prodi)
+
+# def faktorial(n):
+# #Base Case: Kondisi fungsi berhenti
+#     if n == 0 or n == 1:
+#         return 1
+# #Rekursive Case: Fungsi memanggil dirinya sendiri
+#     else:
+#         return n * faktorial(n - 1)
+# #Memanggil fungsi
+# hasil_faktorial = faktorial(6)
+# print(f"Hasil dari 6! {hasil_faktorial}")
+
+try:
+    angka = int(input('Masukkan Angka : '))
+    print(f"Angka yang dimasukkan adalah: {angka}")
+except ValueError:
+    print("Input yang dimasukkan bukan angka yang valid.")
