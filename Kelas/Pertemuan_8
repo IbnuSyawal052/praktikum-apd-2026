@@ -1,0 +1,63 @@
+# import math
+# print(math.sqrt(100))
+# print(math.factorial(10))
+
+# from datetime import datetime
+# import time
+
+# while True:
+#     print(datetime.now())
+#     time.sleep(3)
+
+# import calendar as kalender
+# print(kalender.calendar(2077))
+
+import random
+# # Menghasilkan satu bilangan bulat acak dari 1 sampai 5 (inklusif)
+# print(random.randint(1, 5))
+# # Memilih 1 elemen acak dari list atau string
+# buah = ["pisang", "rambutan", "manggis"]
+# huruf = "abcd"
+# print(random.choice(buah)) # memilih 1 item acak pada list
+# print(random.choice(huruf)) # memilih 1 karakter acak pada string
+
+# jumlah_kemungkinan = 10**6
+# jumlah_percobaan = 100_000
+
+# peluang_cocok = 1 - (1 - 1 / jumlah_kemungkinan) ** jumlah_percobaan
+# perkiraan_percobaan_sampai_cocok = jumlah_kemungkinan
+
+# print(f"Peluang cocok dalam {jumlah_percobaan:,} percobaan: {peluang_cocok:.2%}")
+# print(
+#     "Rata-rata percobaan sampai cocok "
+#     f"(dengan tebakan acak yang bisa berulang): {perkiraan_percobaan_sampai_cocok:,}"
+
+# from prettytable import PrettyTable
+# # Membuat objek tabel dan menentukan nama-nama kolom
+# tabel = PrettyTable()
+# tabel.field_names = ["NIM", "Nama Mahasiswa", "Prodi"]
+# # Menambahkan satu baris data ke dalam tabel
+# tabel.add_row(["2609106001", "Andi Alarice", "Informatika"])
+# # Menambahkan beberapa baris data sekaligus menggunakan list di dalam list
+# tabel.add_rows([
+#     ["2609106002", "Hammam Nopal", "Informatika"],
+#     ["2609106003", "Abimar LLM", "Sistem Informasi"]
+# ])
+# # Mengatur perataan teks pada kolom tertentu ('l' = kiri, 'c' = tengah, 'r'= kanan)
+# tabel.align["Nama Mahasiswa"] = "l"
+# print(tabel)
+
+import datetime
+import random
+
+angka = "0123456789"
+pin = ""
+
+for i in range(6):
+  pin += random.choice(angka)
+
+tanggal_sekarang = datetime.datetime.now()
+tanggal_diformat = tanggal_sekarang.strftime("%d/%m/%Y")
+
+print(f"Kode PIN Keamanan : {pin}")
+print(f"Tanggal Dibuat    : {tanggal_diformat}")
